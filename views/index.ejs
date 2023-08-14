@@ -3,7 +3,7 @@
     
     <!-- header row with logo -->
     <div class="header">
-        <img id="tentacles" src="/assets/tentacles.png">
+        <img id="tentacles" src="./assets/tentacles.png">
         <h1 class="header-text">Sea Monster Crowdfunding</h1>
     </div>
 
@@ -50,7 +50,14 @@
         <button id="all-btn">Show All Games</button>
     </div>
     <div id="games-container">
-
+      <% for(let i = 0; i < games.length; i++){ %>
+            <div class="game-card">
+              <img class="game-img" src= <%= games[i].img %>>
+              <h3><%= games[i].name %></h3>
+              <p><%= games[i].description %></p>
+              <p>Backers: <%= games[i].backers %></p>
+            </div>
+      <% } %>
     </div>
 
 

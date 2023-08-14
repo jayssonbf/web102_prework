@@ -44,7 +44,7 @@ app.get('/', (req, res)=>{
     // Serialize the modified DOM to HTML
     const renderedHtml = dom.serialize();
 
-    res.render('index');
+    res.render('index', {games: GAMES_JSON});
 });
 
 app.listen(3000, () => {
