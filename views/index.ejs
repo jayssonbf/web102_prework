@@ -18,17 +18,25 @@
     <div class="stats-container">
         <div class="stats-card">
             <h3>Individual Contributions</h3>
+            <% let num_contributions = games.reduce( (acc, contrib) => { 
+              return acc + contrib.backers;}, 0); %>
+
             <p id="num-contributions">
+              <%= num_contributions.toLocaleString('en-US') %>
             </p>
         </div>
         <div class="stats-card">
             <h3>Total Raised</h3>
-            <p id="total-raised">
+            <% let totalRaised = games.reduce( (acc, raised) => { 
+              return acc + raised.pledged;}, 0); %>
+            <p id="total-raised">$
+              <%= totalRaised.toLocaleString('en-US') %>
             </p>
         </div>
         <div class="stats-card">
             <h3>Total Number of Games</h3>
             <p id="num-games">
+              <%= games.length.toLocaleString('en-US') %>
             </p>
         </div>
     </div>
