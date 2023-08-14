@@ -1,14 +1,64 @@
-/*****************************************************************************
- * Challenge 2: Review the provided code. The provided code includes:
- * -> Statements that import data from games.js
- * -> A function that deletes all child elements from a parent element in the DOM
-*/
+import jsdom from 'jsdom';
+import fs from 'fs';
+import express from 'express';
+import bodyParser from 'body-parser';
+import ejs from 'ejs';
+
+const app = express();
+
+const { JSDOM } = jsdom;
+
+const html = fs.readFileSync('index.html', 'utf-8');
+
+app.set('view engine', 'ejs');
+
+// Parse incoming request bodies in a middleware before your handlers
+app.use(bodyParser.urlencoded({ extended: true }));
+
+//[Static files] This line of code specifies a static folder which helps render the images and css file
+app.use(express.static("public"));
+
+
 
 // import the JSON data about the crowd funded games from the games.js file
 import GAMES_DATA from './games.js';
 
 // create a list of objects to store the data about the games using JSON.parse
 const GAMES_JSON = JSON.parse(GAMES_DATA)
+
+// Create a new DOM environment using jsdom
+const dom = new JSDOM(html);
+
+// Access and manipulate the DOM
+const document = dom.window.document;
+
+// grab the element with the id games-container
+const gamesContainer = document.getElementById("games-container");
+
+
+app.get('/', (req, res)=>{
+
+    
+
+    addGamesToPage(3);
+    // Serialize the modified DOM to HTML
+    const renderedHtml = dom.serialize();
+
+    res.render('index');
+});
+
+app.listen(3000, () => {
+    console.log(`Server is listening on port ${3000}`);
+});
+
+
+/*****************************************************************************
+ * Challenge 2: Review the provided code. The provided code includes:
+ * -> Statements that import data from games.js
+ * -> A function that deletes all child elements from a parent element in the DOM
+*/
+
+
 
 // remove all child elements from a parent element in the DOM
 function deleteChildElements(parent) {
@@ -22,33 +72,48 @@ function deleteChildElements(parent) {
  * Skills used: DOM manipulation, for loops, template literals, functions
 */
 
-// grab the element with the id games-container
-const gamesContainer = document.getElementById("games-container");
+
+
+
+
 
 // create a function that adds all data from the games array to the page
 function addGamesToPage(games) {
 
-    // loop over each item in the data
+    // // loop over each item in the data
+    //     for (let index = 0; index < GAMES_JSON.length; index++) {
+    //         const element = GAMES_JSON[index];
+    //         // console.log(element.description);
+            
+    //         // create a new div element, which will become the game card
+    //         let div = document.createElement('div');
+
+    //         console.log(`Inside the for loop: new div ${div}`);
+    //         // add the class game-card to the list
+    //         div.className = 'game-card';
 
 
-        // create a new div element, which will become the game card
 
+    //         // set the inner HTML using a template literal to display some info 
+    //         // about each game
+    //         // TIP: if your images are not displaying, make sure there is space
+    //         // between the end of the src attribute and the end of the tag ("/>")
+    //         div.innerHTML = `<p>${element.description}</p>`;
+            
 
-        // add the class game-card to the list
+    //         // append the game to the games-container
+    //             gamesContainer.appendChild(div);
 
+    //     }
 
-        // set the inner HTML using a template literal to display some info 
-        // about each game
-        // TIP: if your images are not displaying, make sure there is space
-        // between the end of the src attribute and the end of the tag ("/>")
-
-
-        // append the game to the games-container
+        
 
 }
 
 // call the function we just defined using the correct variable
 // later, we'll call this function using a different list of games
+
+
 
 
 /*************************************************************************************
